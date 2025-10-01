@@ -1258,7 +1258,7 @@ body {
 /* Split Banners Carousel */
 .split-banners { padding: 2rem 0 0; }
 .split-banners .container { max-width: 1584px; width: 100%; padding-left: 0; padding-right: 0; }
-.split-carousel { position: relative; width: 1584px; height: 396px; margin: 0 auto; overflow: hidden; border-radius: 16px; }
+.split-carousel { position: relative; width: 100%; max-width: 1584px; aspect-ratio: 720 / 264; height: auto; margin: 0 auto; overflow: hidden; border-radius: 16px; }
 .split-track { display: flex; width: 300%; height: 100%; transition: transform .5s ease; }
 .split-slide { width: 100%; height: 100%; background-size: cover; background-position: center; }
 .split-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 42px; height: 42px; border-radius: 999px; border: 1px solid rgba(148,163,184,.45); background: rgba(255,255,255,.98); cursor: pointer; z-index: 20; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 14px rgba(0,0,0,.16); color: #0f172a; font-size: 22px; font-weight: 800; line-height: 1; }
@@ -1274,9 +1274,9 @@ body {
 
 /* Mobile images for carousel */
 @media (max-width: 768px) {
-    /* Responsive sizing for mobile: 720x264 */
-    .split-banners .container { max-width: 720px; width: 100%; }
-    .split-carousel { width: 720px; height: 264px; border-radius: 12px; }
+    /* Responsive: mantener proporción 720:264 y ocupar ancho disponible */
+    .split-banners .container { max-width: 100%; width: 100%; }
+    .split-carousel { width: 100%; max-width: 100%; aspect-ratio: 720 / 264; height: auto; border-radius: 12px; }
     .split-nav { width: 36px; height: 36px; font-size: 18px; }
     .split-dots { bottom: 6px; }
     .split-track .split-slide:nth-child(1) { background-image: url('./images/fotos_carrusel/1_mobile.png') !important; }
@@ -1365,21 +1365,30 @@ body {
 }
 
 .vehicle-spec__card h4 { font-size: 1rem; color: #1f2937; margin-bottom: .25rem; }
-.vehicle-spec__card p { font-size: .85rem; color: #475569; line-height: 1.4; }
+.vehicle-spec__card p { font-size: .85rem; color: #475569; line-height: 1.4; max-width: 220px; }
 
 @media (max-width: 1024px) {
     /* Mantener posiciones relativas sobre la imagen en mobile grande */
     .vehicle-feature__stage { position: relative; }
     .vehicle-spec { transform: scale(.9); }
+    .vehicle-spec__card { width: 200px; }
+    .vehicle-spec__card h4 { font-size: .95rem; }
+    .vehicle-spec__card p { font-size: .8rem; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 }
 
 @media (max-width: 768px) {
-    .vehicle-feature__stage { position: relative; }
-    .vehicle-spec { transform: scale(.85); }
-    .vehicle-spec--tl { top: 6%; left: 2%; }
-    .vehicle-spec--tr { top: 10%; right: 2%; }
-    .vehicle-spec--bl { bottom: 8%; left: 2%; }
-    .vehicle-spec--br { bottom: 10%; right: 2%; }
+    /* En móviles, los specs pasan debajo en grilla 2x2 */
+    .vehicle-feature__stage {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        align-items: start;
+    }
+    .vehicle-feature__image { grid-column: 1 / -1; width: 100%; height: auto; }
+    .vehicle-spec { position: static; transform: none; }
+    .vehicle-spec__card { width: 100%; }
+    .vehicle-spec__card h4 { font-size: .9rem; }
+    .vehicle-spec__card p { font-size: .78rem; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 }
 
 .contact-header {
