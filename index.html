@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sabana Express - Transporte de Carga</title>
+    <script>
+        (function() {
+            try {
+                if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+                if (location.hash) {
+                    history.replaceState(null, document.title, location.pathname + location.search);
+                }
+                window.scrollTo(0, 0);
+            } catch (e) {}
+        })();
+    </script>
     <link rel="stylesheet" href="./style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -17,7 +28,7 @@
                     <img src="https://via.placeholder.com/120x40/2563eb/ffffff?text=TDM" alt="TDM Logo">
                 </div>
                 <ul class="nav-menu">
-                    <li><a href="#home">Inicio</a></li>
+                    <li><a href="#inicio">Inicio</a></li>
                     <li><a href="#pricing">Servicios</a></li>
                     <li><a href="#cotizaciones">Cotizaciones</a></li>
                     <li><a href="#nosotros">Nosotros</a></li>
@@ -35,8 +46,23 @@
 
     <!-- Hero Section - Fullscreen Banner -->
     <section class="hero" id="inicio">
-        <img class="hero-banner hero-banner-desktop" src="./images/banner/banner_sabana.png" alt="Banner Sabana Express Desktop">
-        <img class="hero-banner hero-banner-mobile" src="./images/banner/banner_sabana_movil.png" alt="Banner Sabana Express Mobile">
+        <video class="hero-banner hero-banner-desktop" autoplay muted loop playsinline preload="auto" poster="./images/Banner/banner_sabana.png">
+            <source src="./images/banner/banner_pc.mov" type="video/mp4">
+            Tu navegador no soporta el elemento de video.
+        </video>
+        <video class="hero-banner hero-banner-mobile" autoplay muted loop playsinline preload="auto" poster="./images/Banner/banner_sabana_movil.png">
+            <source src="./images/banner/banner_mb.mp4" type="video/mp4">
+            Tu navegador no soporta el elemento de video.
+        </video>
+        
+        <!-- Hero Overlay Content -->
+        <div class="hero-overlay-content">
+            <h1 class="hero-title-main">Tu destino, nuestro compromiso</h1>
+            <a href="#cotizaciones" class="hero-cta-btn">
+                <i class="fas fa-calculator"></i>
+                Solicitar Cotización
+            </a>
+        </div>
     </section>
 
     
@@ -153,74 +179,7 @@
         </div>
     </section>
 
-    <!-- Split Banners Carousel -->
-    <section class="split-banners" id="banners">
-        <div class="container">
-            <div class="split-carousel" data-autoplay="true">
-                <div class="split-track">
-                    <div class="split-slide" style="background-image:url('./images/fotos_carrusel/1.png')"></div>
-                    <div class="split-slide" style="background-image:url('./images/fotos_carrusel/2.png')"></div>
-                    <div class="split-slide" style="background-image:url('./images/fotos_carrusel/3.png')"></div>
-                </div>
-                <button class="split-nav split-prev" aria-label="Anterior"></button>
-                <button class="split-nav split-next" aria-label="Siguiente"></button>
-                <div class="split-dots" role="tablist" aria-label="Banners">
-                    <button class="split-dot is-active" data-index="0" aria-label="Banner 1" role="tab"></button>
-                    <button class="split-dot" data-index="1" aria-label="Banner 2" role="tab"></button>
-                    <button class="split-dot" data-index="2" aria-label="Banner 3" role="tab"></button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Vehicle Feature Section -->
-    <section class="vehicle-feature" id="vehiculo">
-        <div class="container">
-            <div class="vehicle-feature__text">
-                <h2 class="gradient-text-bright">Potencia y Precisión</h2>
-                <h3>Rendimiento profesional en cada kilómetro</h3>
-                <p>Conoce nuestro equipo de carga optimizado para entregas seguras: motores de alto desempeño, suspensión reforzada y sistemas de anclaje para proteger cada envío.</p>
-            </div>
-
-            <div class="vehicle-feature__stage">
-                <img class="vehicle-feature__image" src="./images/render-camion.png" alt="Camión Sabana Express">
-
-                <div class="vehicle-spec vehicle-spec--tl">
-                    <div class="vehicle-spec__card">
-                        <div class="vehicle-spec__icon">🚚</div>
-                        <h4>Cobertura Nacional</h4>
-                        <p>Llegamos a principales ciudades y destinos remotos de Colombia.</p>
-                    </div>
-                </div>
-
-                <div class="vehicle-spec vehicle-spec--tr">
-                    <div class="vehicle-spec__card">
-                        <div class="vehicle-spec__icon">⏱️</div>
-                        <h4>Puntualidad Garantizada</h4>
-                        <p>Rutas optimizadas y ETAs claros para entregas a tiempo.</p>
-                    </div>
-                </div>
-
-                <div class="vehicle-spec vehicle-spec--bl">
-                    <div class="vehicle-spec__card">
-                        <div class="vehicle-spec__icon">📡</div>
-                        <h4>Seguimiento 24/7</h4>
-                        <p>Tracking en tiempo real y alertas durante toda la operación.</p>
-                    </div>
-                </div>
-
-                <div class="vehicle-spec vehicle-spec--br">
-                    <div class="vehicle-spec__card">
-                        <div class="vehicle-spec__icon">🤝</div>
-                        <h4>Atención Personalizada</h4>
-                        <p>Un equipo dedicado que responde y acompaña tu envío.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section (Blue framed header, glass cards) -->
+    <!-- Pricing Section (Blue framed header, glass cards) [moved here] -->
     <section class="pricing" id="pricing">
         <div class="pricing__bg"></div>
         <div class="container">
@@ -396,7 +355,249 @@
         </div>
     </section>
 
-    
+    <!-- Beliefs Section -->
+    <section class="beliefs" id="creemos">
+        <div class="container">
+            <header class="beliefs__header">
+                <h2>Creemos firmemente en</h2>
+                <span class="beliefs__underline" aria-hidden="true"></span>
+            </header>
+
+            <div class="beliefs__grid beliefs__grid--2x2">
+                <div class="photo-grid-2x2">
+                    <span class="grid-lines" aria-hidden="true"></span>
+                    <article class="belief-card">
+                        <div class="photo-frame glow"><img src="./images/values/actitud.png" alt="Actitud Positiva"></div>
+                        <h3>Actitud Positiva</h3>
+                        <p>Las acciones disciplinadas producen grandes resultados.</p>
+                    </article>
+                    <article class="belief-card">
+                        <div class="photo-frame glow"><img src="./images/values/disciplina.png" alt="Disciplina"></div>
+                        <h3>Disciplina</h3>
+                        <p>La constancia nos acerca a la excelencia.</p>
+                    </article>
+                    <article class="belief-card">
+                        <div class="photo-frame glow"><img src="./images/values/excelencia.png" alt="Excelencia en Servicio"></div>
+                        <h3>Excelencia en Servicio</h3>
+                        <p>No entregamos un producto, entregamos una experiencia.</p>
+                    </article>
+                    <article class="belief-card">
+                        <div class="photo-frame glow"><img src="./images/values/equipo.png" alt="Trabajo en Equipo"></div>
+                        <h3>Trabajo en Equipo</h3>
+                        <p>Los grandes logros suceden con colaboración.</p>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonios">
+        <div class="container">
+            <header class="testimonials__header">
+                <h2>Lo que dicen nuestros clientes</h2>
+                <p>Testimonios reales de quienes confían en nosotros</p>
+            </header>
+
+            <div class="testimonials__grid">
+                <article class="testimonial-card">
+                    <div class="testimonial-quote">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "Excelente servicio de transporte. Siempre puntuales y muy cuidadosos con la carga. 
+                        Los recomiendo ampliamente para cualquier tipo de envío."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>María González</h4>
+                            <span>Gerente de Logística</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="testimonial-card">
+                    <div class="testimonial-quote">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "Llevamos años trabajando con Sabana Express y nunca nos han fallado. 
+                        Profesionalismo y confiabilidad en cada envío."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Carlos Ramírez</h4>
+                            <span>Director Comercial</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="testimonial-card">
+                    <div class="testimonial-quote">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "El mejor servicio de mudanzas que he contratado. Todo llegó intacto y en tiempo récord. 
+                        Muy profesionales en todo momento."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Ana Martínez</h4>
+                            <span>Propietaria de Negocio</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vehicle Feature Section -->
+    <section class="vehicle-feature" id="vehiculo">
+        <div class="container">
+            <div class="vehicle-feature__text">
+                <h2 class="gradient-text-bright">Potencia y Precisión</h2>
+                <h3>Rendimiento profesional en cada kilómetro</h3>
+                <p>Conoce nuestro equipo de carga optimizado para entregas seguras: motores de alto desempeño, suspensión reforzada y sistemas de anclaje para proteger cada envío.</p>
+            </div>
+
+            <div class="vehicle-feature__stage">
+                <img class="vehicle-feature__image" src="./images/render-camion.png" alt="Camión Sabana Express">
+
+                <div class="vehicle-spec vehicle-spec--tl">
+                    <div class="vehicle-spec__card">
+                        <div class="vehicle-spec__icon">🚚</div>
+                        <h4>Cobertura Nacional</h4>
+                        <p>Llegamos a principales ciudades y destinos remotos de Colombia.</p>
+                    </div>
+                </div>
+
+                <div class="vehicle-spec vehicle-spec--tr">
+                    <div class="vehicle-spec__card">
+                        <div class="vehicle-spec__icon">⏱️</div>
+                        <h4>Puntualidad Garantizada</h4>
+                        <p>Rutas optimizadas y ETAs claros para entregas a tiempo.</p>
+                    </div>
+                </div>
+
+                <div class="vehicle-spec vehicle-spec--bl">
+                    <div class="vehicle-spec__card">
+                        <div class="vehicle-spec__icon">📡</div>
+                        <h4>Seguimiento 24/7</h4>
+                        <p>Tracking en tiempo real y alertas durante toda la operación.</p>
+                    </div>
+                </div>
+
+                <div class="vehicle-spec vehicle-spec--br">
+                    <div class="vehicle-spec__card">
+                        <div class="vehicle-spec__icon">🤝</div>
+                        <h4>Atención Personalizada</h4>
+                        <p>Un equipo dedicado que responde y acompaña tu envío.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section (Blue framed header, glass cards) [duplicate removed] -->
+    <!-- removed duplicate pricing section to keep single instance above -->
+    <!--
+    <section class="pricing" id="pricing">
+        <div class="pricing__bg"></div>
+        <div class="container">
+            <div class="pricing__header">
+                <div class="pricing__band">
+                    <h2>Nuestros Servicios</h2>
+                    <p>Soluciones claras y confiables. Sin letras pequeñas: solo un servicio suave y eficiente.</p>
+                    <div class="pricing__decor pricing__decor--left" aria-hidden="true"></div>
+                    <div class="pricing__decor pricing__decor--right" aria-hidden="true"></div>
+                </div>
+            </div>
+
+            <div class="pricing__grid">
+                <article class="price-card">
+                    <header class="price-card__head">
+                        <div class="price-card__dot" aria-hidden="true"></div>
+                        <span class="price-card__plan">Transporte Nacional</span>
+                    </header>
+                    <p class="price-card__desc">Cobertura en todo el país con manejo cuidadoso y seguimiento constante.</p>
+                    <ul class="price-card__list">
+                        <li>Cobertura nacional completa</li>
+                        <li>Seguimiento en tiempo real</li>
+                        <li>Seguro incluido</li>
+                        <li>Entrega garantizada</li>
+                    </ul>
+                    <div class="price-card__actions">
+                        <button class="btn-outline">Más información</button>
+                    </div>
+                </article>
+
+                <article class="price-card price-card--featured">
+                    <header class="price-card__head">
+                        <div class="price-card__dot" aria-hidden="true"></div>
+                        <span class="price-card__plan">Transporte Urbano</span>
+                    </header>
+                    <p class="price-card__desc">Movilidad ágil dentro de la ciudad con rutas optimizadas y horarios flexibles.</p>
+                    <ul class="price-card__list">
+                        <li>Entregas el mismo día</li>
+                        <li>Rutas optimizadas</li>
+                        <li>Ventanas de tiempo flexibles</li>
+                        <li>Servicio express</li>
+                    </ul>
+                    <div class="price-card__actions">
+                        <button class="btn-primary">Más información</button>
+                    </div>
+                </article>
+
+                <article class="price-card">
+                    <header class="price-card__head">
+                        <div class="price-card__dot" aria-hidden="true"></div>
+                        <span class="price-card__plan">Mudanzas</span>
+                    </header>
+                    <p class="price-card__desc">Traslados residenciales y corporativos con protección y coordinación total.</p>
+                    <ul class="price-card__list">
+                        <li>Embalaje profesional</li>
+                        <li>Carga y descarga incluida</li>
+                        <li>Protección total</li>
+                        <li>Equipo especializado</li>
+                    </ul>
+                    <div class="price-card__actions">
+                        <button class="btn-outline">Más información</button>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+    -->
 
     <!-- Contact Section -->
     <section class="contact" id="contacto">

@@ -50,14 +50,18 @@ document.addEventListener('DOMContentLoaded', function() {
 // Scroll suave para navegación
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            const offsetTop = target.offsetTop - 80; // Compensar por el header fijo
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-            });
+        const href = this.getAttribute('href');
+        if (!href) return;
+        const isHash = href.startsWith('#');
+        if (isHash) {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                const offsetTop = target.offsetTop - 80; // Compensar por el header fijo
+                // Evitar modificar el hash para que no se restablezca al recargar
+                history.pushState(null, '', location.pathname + location.search);
+                window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+            }
         }
     });
 });
@@ -125,6 +129,29 @@ function initSplitCarouselAutoplay({ selector = '.split-carousel', interval = 50
 // Start autoplay on load
 document.addEventListener('DOMContentLoaded', () => {
     initSplitCarouselAutoplay({ selector: '.split-carousel', interval: 5000 });
+
+    // Evitar que el navegador salte a un ancla (p.ej. #cotizaciones) tras recargar
+    if (window.location.hash) {
+        try {
+            history.replaceState(null, document.title, window.location.pathname + window.location.search);
+        } catch (_) {
+            // noop
+        }
+    }
+
+    // Desactivar restauración de scroll por el historial
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+
+    // Forzar posicionamiento en el banner (hero) al cargar
+    requestAnimationFrame(() => {
+        const hero = document.querySelector('.hero');
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        if (hero) {
+            hero.scrollIntoView({ behavior: 'auto', block: 'start' });
+        }
+    });
 });
 
 // Animaciones al hacer scroll
@@ -338,6 +365,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (!form) return;
 
+    // Bandera para permitir auto-focus solo después de interacción del usuario
+    let userInteractedForForm = false;
+    const enableUserFocus = () => { userInteractedForForm = true; document.removeEventListener('pointerdown', enableUserFocus); document.removeEventListener('keydown', enableUserFocus); };
+    document.addEventListener('pointerdown', enableUserFocus);
+    document.addEventListener('keydown', enableUserFocus);
+
     // Secuencia de campos que aparecerán progresivamente
     const fieldSequence = [
         'ciudadOrigen',
@@ -372,11 +405,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     field.classList.remove('entering');
                 }, 50);
 
-                // Auto-focus en el primer input del campo
+                // Auto-focus en el primer input del campo sólo tras interacción, sin desplazar la página
                 setTimeout(() => {
+                    if (!userInteractedForForm) return;
                     const input = field.querySelector('input, select, textarea');
                     if (input && fieldId !== 'submitBtn') {
-                        input.focus();
+                        try { input.focus({ preventScroll: true }); } catch (_) { /* omit */ }
                     }
                 }, 300);
 
@@ -765,10 +799,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const serviceCard = this.closest('.service-card');
             const serviceName = serviceCard.querySelector('h3').textContent;
             
-            // Redirigir a la sección de cotizaciones con el servicio preseleccionado
+            // Desplazar a la sección de cotizaciones con scroll suave sin cambiar hash
             const cotizacionesSection = document.getElementById('cotizaciones');
             if (cotizacionesSection) {
-                cotizacionesSection.scrollIntoView({ behavior: 'smooth' });
+                const top = cotizacionesSection.getBoundingClientRect().top + window.pageYOffset - 80;
+                window.scrollTo({ top, behavior: 'smooth' });
                 
                 // Preseleccionar el tipo de servicio en el formulario
                 setTimeout(() => {
