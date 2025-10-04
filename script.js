@@ -50,18 +50,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Scroll suave para navegación
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (!href) return;
-        const isHash = href.startsWith('#');
-        if (isHash) {
-            e.preventDefault();
-            const target = document.querySelector(href);
-            if (target) {
-                const offsetTop = target.offsetTop - 80; // Compensar por el header fijo
-                // Evitar modificar el hash para que no se restablezca al recargar
-                history.pushState(null, '', location.pathname + location.search);
-                window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-            }
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            const offsetTop = target.offsetTop - 80; // Compensar por el header fijo
+            window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+            });
         }
     });
 });
@@ -874,4 +870,86 @@ document.addEventListener('DOMContentLoaded', function() {
         card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         cardObserver.observe(card);
     });
+});
+
+// ========================================================================================
+// FUNCIONALIDAD DE SEDES
+// ========================================================================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Animaciones de entrada para las cards de sedes
+    const sedeCards = document.querySelectorAll('.sede-card');
+    
+    const sedeCardObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 200);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    sedeCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        sedeCardObserver.observe(card);
+    });
+});
+
+// ========================================================================================
+// BOTONES FLOTANTES DE WHATSAPP
+// ========================================================================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const whatsappButtons = document.querySelectorAll('.whatsapp-floating');
+    
+    whatsappButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const whatsappUrl = this.getAttribute('data-link');
+            
+            // Animación de click
+            this.style.animation = 'none';
+            setTimeout(() => {
+                this.style.animation = 'floatPulse 3s ease-in-out infinite';
+            }, 10);
+            
+            // Abrir WhatsApp en nueva ventana
+            window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+        });
+        
+        // Agregar efecto de hover adicional
+        button.addEventListener('mouseenter', function() {
+            const label = this.querySelector('.whatsapp-label');
+            if (label) {
+                label.style.transform = 'translateY(-50%) scale(1.05)';
+            }
+        });
+        
+        button.addEventListener('mouseleave', function() {
+            const label = this.querySelector('.whatsapp-label');
+            if (label) {
+                label.style.transform = 'translateY(-50%) scale(1)';
+            }
+        });
+    });
+    
+    // Animación de entrada inicial con delay
+    setTimeout(() => {
+        whatsappButtons.forEach((button, index) => {
+            button.style.opacity = '0';
+            button.style.transform = 'scale(0)';
+            
+            setTimeout(() => {
+                button.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                button.style.opacity = '1';
+                button.style.transform = 'scale(1)';
+            }, 500 + (index * 200));
+        });
+    }, 1000);
 });
